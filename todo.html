@@ -1,0 +1,106 @@
+<html>
+<head>
+	
+<script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+<style>
+	div input,select{
+        margin:10px;
+    }
+    .td{
+        margin:5px;
+        padding:10px;
+        border: 1px solid black;
+        border-collapse: collapse;
+        border-spacing: 10px;  
+    }
+	 
+	
+</style>
+	
+</head>
+<body>
+	
+	<div id="app"></div>
+	
+                
+</body>
+
+</html>
+
+
+<script type="text/babel">
+
+class Todo extends React.Component{
+    constructor(props){
+        super(props);
+        this.state={
+            lists:[],
+            input:"",
+            count:0.
+        };
+    }
+
+    render() {
+        return(
+        
+           <div>
+
+            <input onChange={this.read} type="text" value={this.state.input}/>
+            <button onClick={this.handleclick}>Submit</button>
+            <div>
+                count:{this.state.count}
+            </div>
+            <table>
+                <thead><tr><th>Task</th><th>Action</th></tr></thead>
+                <tbody>
+                    {
+                        this.state.lists.map((ele,index) =>
+                        <tr key={index}><td className='td'>{ele}</td><td className='td'><button value={index} onClick={this.remove}>Remove</button><button value={index} onClick={this.edit}>Edit</button></td></tr>
+                        )
+                        
+                    }
+                </tbody>
+            </table>
+
+        </div>
+
+        );
+}
+read =(ele)=>{
+this.setState({
+    input:ele.target.value
+});
+}
+handleclick=()=>{
+    if(this.state.input!=="")
+    this.setState(state=>({
+        lists:[...this.state.lists, this.state.input],input:"",
+        count:state.count+1
+
+}))
+
+remove=(ele)=>{
+// this.setState(prevstate=>({
+//     // lists:[this.state.lists.splice(), this.state.input],input:"",
+//     lists:[this.state.lists.splice(ele,index)],
+//     count:state.count-1
+let lists=this.state.lists;
+console.log(lists);
+lists.splice(ele.target.value,1);
+this.setState({lists:lists});
+}
+
+   
+    
+    
+
+
+        
+}
+}
+
+ReactDOM.render(<Todo />, document.getElementById("app"));
+</script>
